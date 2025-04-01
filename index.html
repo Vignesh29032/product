@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMS Electronics Shop</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-start; /* Align items to the left */
+            align-items: center;
+            padding: 20px 50px; /* Consistent padding */
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            gap: 20px; /* Space between header items */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6b46c1;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 8px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #edf2f7;
+            border-radius: 20px;
+            padding: 5px 15px;
+            height: 40px; /* Reduced height for better proportion */
+            width: 300px; /* Fixed width for consistency */
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%; /* Full width of search-bar */
+            font-size: 14px;
+        }
+
+        .search-bar i {
+            color: #6b46c1;
+            margin-left: 10px; /* Adjusted margin for icon */
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-left: 20px; /* Space from search-bar */
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: #6b46c1;
+        }
+
+        .user-section {
+            display: flex;
+            width: 15%;
+            /* background-color: red; */
+            position: relative;
+            align-items: center;
+            margin-left: auto; /* Pushes user section to the right */
+            gap: 15px; /* Space between cart, user, and settings */
+        }
+
+        .cart {
+            position: relative;
+        }
+
+        .cart i {
+            font-size: 24px;
+            color: #6b46c1;
+            margin-right: 10px;
+        }
+
+        .cart span {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #6b46c1;
+            color: #fff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .user img {
+            border-radius: 50%;
+            margin-right: 10px;
+            width: 60px; /* Fixed size for user image */
+            height: 60px;
+        }
+
+        .user span {
+            top: 15px;
+            position: absolute;
+            font-weight: 700;
+            color: #333; /* Removed red background for better design */
+        }
+        /* main */
+        .main{
+            width: 100%;
+            height: auto;
+            background-color: rgb(209, 228, 235);
+            padding-top: 20px;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: calc(80vh - 100px);
+            padding: 0 50px;
+            background-color: #7a93c8;
+            width: 97%;
+            margin-top: 100px;
+            margin-left: 20px;
+            border-radius: 20px;
+            color: #fff;
+        }
+
+        .hero-content {
+            max-width: 50%;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+        }
+
+        .hero-content button {
+            background-color: #6b46c1;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .hero-content button:hover {
+            background-color: #553c9a;
+        }
+
+        .hero-image img {
+    max-width: 700px;
+    animation: float 3s ease-in-out infinite; /* Adds a floating animation */
+        }
+
+/* Define the animation */
+    @keyframes float {
+    0%, 100% {
+        transform: translateY(0); /* Start at original position */
+    }
+    50% {
+        transform: translateY(-20px); /* Move up 20px */
+    }
+    }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+            }
+
+            .search-bar {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .search-bar i {
+                margin-left: 5px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                margin-left: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .user-section {
+                flex-direction: row;
+                margin-left: 0;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-image img {
+                max-width: 300px;
+                margin-top: 20px;
+            }
+        }
+
+        /* carosel  */
+        .scroll{
+           /* background-color: red; */
+           overflow-x: scroll;
+           gap: 25px;
+           scrollbar-width: none;
+           /* background-color:red ; */
+           padding: 10px;
+           width: 97%;
+           margin-left: 25px;
+           height: 440px;
+           /* position: absolute;
+           top:110%; */
+           border-radius:20px;
+           margin-top: 30px;
+           display: flex;
+       }
+       .card {
+           width: 250px;
+           /* height: auto; */
+           /* background-color: aquamarine; */
+           border-radius: 20px;
+           border: 3px solid white;
+           /* overflow: hidden; */
+           transition: transform 0.3s ease;
+           position: relative;  /* To position overlay inside it */
+           border-radius: 10px;
+           margin: 0;
+           flex-shrink: 0;
+           background-color: lightblue;
+           color: black;
+       
+       }
+       .card:hover{
+           border: 3px solid  rgb(99, 9, 184);
+           transition: .5s;
+       }
+       .card img{
+           width: 244px;
+           height: 250px;
+           border-radius: 10px 10px 0px 0px ;
+           z-index: 2;  
+           
+       }
+       
+       .card .trailers{
+           color: rgb(98, 97, 97);
+           /* background-color: blue; */
+           font-size: 20px;
+           text-decoration: none;
+           margin-left: 5px; 
+       }
+       .card h2{
+           margin:10px 0px 30px 10px;
+           font-size: 25px;
+           /* color: white; */
+       
+       }
+       .card p{
+           margin: 10px 0px 30px 10px;
+           font-size: 18px;
+           /* color: white; */
+       }
+       .card h2,.card p,.card a{
+           position: relative;
+           z-index: 2;
+           /* color: white; */
+       }
+       
+               /* browsw section */
+               .browse{
+                margin-top: 20px;
+                margin-bottom: 30px;
+                text-align: center;
+                font-size: 40px;
+      }
+      /* product section */
+     .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        row-gap: 20px;
+        gap: 20px;
+        padding: 20px;
+        margin: 0 50px; /* Added margin for spacing */
+        
+     }
+     .product img{
+        width: 100%;
+        height: 300px;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+
+     }
+.product h3{
+    font-size: 20px;
+}
+.product p{
+    margin-top: 10px;
+    font-size: 18px;
+     color: blue;
+
+}
+.product p i{
+    font-size: 30px;
+    color: black;
+    margin-left: 280px;
+}
+  .foot{
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    color: white;
+    
+}     
+.foot p{
+    text-align: center;
+}
+.current{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class='bx bx-bolt'></i> SIMS
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search Your Product">
+            <i class='bx bx-search'></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#currentoffer">Offer</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#browseproduct">Product</a></li>
+            </ul>
+        </nav>
+        <div class="user-section">
+            <div class="cart">
+                <i class='bx bx-cart'></i>
+                <span>2</span>
+            </div>
+            <div class="user">
+                <img src="profile.jpeg" alt="User">
+                <span>Sung JinWoo</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+     <div class="main">
+        <!-- laptop section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>The Best Electronics Shop<br>For Online Purchase</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et mi viverra gravida rutrum lorem. Amet sed morbi dignissim lorem nec faucibus donec et, est cras facilisis. Iaculis tristique.</p>
+            <button>Shop Now</button>
+        </div>
+        <div class="hero-image">
+            <img src="laptop.png" alt="Laptop">
+        </div>
+    </section>
+    <!-- carosel section -->
+    
+    <h2 class="current" id="currentoffer">Current Offers </h2>
+    <div class="scroll">
+        <div class="card">
+            <img src="tablet.webp" alt="">
+            <h2>Tablet</h2>
+            <p>Total Stocks:235</p>
+        </div>
+            <!--  -->
+            <div class="card">
+                <img src="watch.webp" alt="">
+                <h2>Smart Watch</h2>
+                <p>Total Stocks:134</p>
+            </div>
+            <div class="card">
+                <img src="imac.webp" alt="">
+                <h2>iMac</h2>
+                <p>Total Stocks:45</p>
+            </div>
+            <div class="card">
+                <img src="drone.webp" alt="">
+                <h2>Drone</h2>
+                <p>Total Stocks:123</p>
+            </div>
+            <div class="card">
+                <img src="earbuds.webp" alt="">
+                <h2>Earbuds</h2>
+                <p>Total Stocks:340</p>
+            </div>
+            <div class="card">
+                <img src="camera.jpg" alt="">
+                <h2>Camera</h2>
+                <p>Total Stocks:100</p>
+            </div>
+            <div class="card">
+                <img src="mouse.webp" alt="">
+                <h2>Mouse</h2>
+                <p>Total Stocks:160</p>
+            </div>
+            <div class="card">
+                <img src="keyboard.jpeg" alt="">
+                <h2>Keyboard</h2>
+                <p>Total Stocks:240</p>
+            </div>
+            <div class="card">
+                <img src="charger.jpg" alt="">
+                <h2>Charger</h2>
+                <p>Total Stocks:100</p>
+            </div>
+
+     </div>
+    <!-- browse products -->
+     <h2 class="browse" id="browseproduct">Browse Products</h2>
+
+     
+        <!-- prodictt -->
+        <section class="product-grid">
+            <div class="product">
+                
+                <a href=""><img src="earbuds.webp" alt="Gaming Laptop"></a>
+                <h3>Earbuds</h3>
+                <p>$540   <i class='bx bx-cart-alt'></i></p>
+               
+            </div>
+            <div class="product">
+                <a href=""><img src="drone.webp" alt="VR Box"></a>
+                <h3>Drone</h3>
+                <p>$234   <i class='bx bx-cart-alt'></i> </p>
+              
+            </div>
+            <div class="product">
+                <a href=""><img src="camera.jpg" alt="Gaming VR"></a>
+                <h3>Camera</h3>
+                <p>$123   <i class='bx bx-cart-alt'></i> </p>
+                
+            </div>
+            <div class="product">
+                <a href=""> <img src="keyboard.jpeg" alt="Gaming Headphone"></a>
+                <h3>Keyboard</h3>
+                <p>$240   <i class='bx bx-cart-alt'></i></p>
+              
+            </div>
+            <div class="product">
+               <a href=""> <img src="imac.webp" alt="Joy Stick"></a>
+                <h3>imac</h3>
+                <p>$125 <i class='bx bx-cart-alt'></i></p>
+                
+            </div>
+            <div class="product">
+                <img src="earbuds.webp" alt="Gaming Laptop">
+                <h3>Earbuds</h3>
+                <p>$540   <i class='bx bx-cart-alt'></i></p>
+               
+            </div>
+            <div class="product">
+                <img src="drone.webp" alt="VR Box">
+                <h3>Drone</h3>
+                <p>$234   <i class='bx bx-cart-alt'></i> </p>
+              
+            </div>
+            <div class="product">
+                <img src="camera.jpg" alt="Gaming VR">
+                <h3>Camera</h3>
+                <p>$123   <i class='bx bx-cart-alt'></i> </p>
+                
+            </div>
+            <div class="product">
+                <img src="keyboard.jpeg" alt="Gaming Headphone">
+                <h3>Keyboard</h3>
+                <p>$240   <i class='bx bx-cart-alt'></i></p>
+              
+            </div>
+            <div class="product">
+                <img src="imac.webp" alt="Joy Stick">
+                <h3>imac</h3>
+                <p>$125 <i class='bx bx-cart-alt'></i></p>
+                
+            </div>
+            <div class="product">
+                <img src="earbuds.webp" alt="Gaming Laptop">
+                <h3>Earbuds</h3>
+                <p>$540   <i class='bx bx-cart-alt'></i></p>
+               
+            </div>
+            <div class="product">
+                <img src="drone.webp" alt="VR Box">
+                <h3>Drone</h3>
+                <p>$234   <i class='bx bx-cart-alt'></i> </p>
+              
+            </div>
+        </section>
+<!-- footer  -->
+        <footer class="foot" id="contact">
+            <p>Email addres :company@gmail.com</p>
+            <p>Contact No:12345678</p>
+            <p>Address: 123 Main St, City, Country</p>
+
+        </footer>
+
+</div>
+</body>
+<script>
+
+</script>
+</html>

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <title>Product page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        :root {
+            --primary-color: #6b46c1;
+            --success-color: #10b981;
+        }
+
+        body {
+            background-color: #f4f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            gap: 20px;
+            flex-wrap: wrap; /* Allow wrapping for mobile */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 8px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #edf2f7;
+            border-radius: 20px;
+            padding: 5px 15px;
+            height: 40px;
+            width: 100%; /* Default to full width on mobile */
+            max-width: 300px; /* Max width on desktop */
+            transition: width 0.3s ease; /* Smooth transition for width changes */
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .search-bar i {
+            color: var(--primary-color);
+            margin-left: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-left: 20px;
+            flex-wrap: wrap; /* Allow wrapping for mobile */
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            gap: 15px;
+            flex-wrap: wrap; /* Allow wrapping for mobile */
+        }
+
+        .cart {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .cart span {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user span {
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 0;
+            padding: 2rem;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-image {
+            background-color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            transform: rotate(-10deg);
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .category {
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rating i {
+            color: #fbbf24;
+        }
+
+        .price {
+            font-size: 2rem;
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quantity-selector button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .quantity-selector button:hover {
+            background-color: #e5e7eb;
+        }
+
+        .quantity-selector input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .add-to-cart,
+        .add-to-wishlist {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .add-to-cart:hover {
+            background-color: #5a32b0;
+        }
+
+        .add-to-wishlist {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background-color: transparent;
+        }
+
+        .add-to-wishlist:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .product-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .availability {
+            color: var(--success-color);
+        }
+
+        .availability.out-of-stock {
+            color: #ef4444;
+        }
+
+        .tabs {
+            margin: 2rem 0;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tab-button {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4b5563;
+            position: relative;
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .tab-content {
+            padding: 2rem 0;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .promo-banner {
+            background-color: #e9e9f0;
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .promo-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .promo-button {
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .promo-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .foot {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .foot p {
+            margin: 0.5rem 0;
+            color: #9ca3af;
+        }
+
+        .disabled {
+            opacity: 0.5;
+            cursor: not-allowed !important;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .search-bar {
+                width: 100%;
+                max-width: none; /* Remove max-width on mobile */
+                order: 2; /* Move search bar below logo on mobile */
+            }
+
+            nav ul {
+                margin-left: 0;
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .user-section {
+                margin-left: 0;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .promo-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class='bx bx-bolt'></i> SIMS
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search Your Product" id="searchInput">
+            <i class='bx bx-search'></i>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Shop</a></li>
+                <li><a href="index.html">Offer</a></li>
+                <li><a href="index.html">Contact</a></li>
+                <li><a href="index.html">Product</a></li>
+            </ul>
+        </nav>
+        <div class="user-section">
+            <div class="cart">
+                <i class='bx bx-cart'></i>
+                <span>0</span>
+            </div>
+            <div class="user">
+                <img src="profile.jpeg" alt="User">
+                <span>Sung JinWoo</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="product-container">
+            <div class="product-image">
+                <div class="new-badge">New</div>
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop" alt="Sanung Laptop">
+            </div>
+            
+            <div class="product-details">
+                <div class="category">LAPTOP</div>
+                <h1 class="product-title">Samsung Laptop 14", 8gb ram, 1tb ssd</h1>
+                <div class="rating">
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <span class="rating-score">4.9</span>
+                </div>
+
+                <div class="price">$3,210.00</div>
+                
+                <p class="product-description">
+                    Experience next-level computing with our latest Sanung laptop. Featuring a powerful processor, ample storage, and a stunning display, this laptop is perfect for both work and entertainment.
+                </p>
+                
+                <div class="quantity-selector">
+                    <button id="decreaseQuantity">-</button>
+                    <input type="number" id="quantity" value="1" min="1">
+                    <button id="increaseQuantity">+</button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="add-to-cart">
+                        <i class='bx bx-cart-add'></i>
+                        Add To Cart
+                    </button>
+                    <button class="add-to-wishlist">
+                        <i class='bx bx-purchase-tag'></i>
+                        Buy Now
+                    </button>
+                </div>
+                
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">SKU:</span>
+                        <span>125J31</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Category:</span>
+                        <span>Laptops, Electronics</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Availability:</span>
+                        <span class="availability">In Stock</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active">Description</button>
+                <button class="tab-button">Specifications</button>
+                <button class="tab-button">Reviews</button>
+            </div>
+            
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <p>Experience unparalleled performance with the latest Sanung laptop. This powerful machine comes equipped with a high-speed processor, ample RAM, and generous storage space, making it perfect for both professional work and entertainment.</p>
+                    <br>
+                    <p>The stunning 14-inch display delivers crisp, vibrant visuals, while the sleek design ensures maximum portability. With advanced cooling technology and long-lasting battery life, you can stay productive throughout the day.</p>
+                </div>
+                <div class="tab-pane">
+                    <ul>
+                        <li>Processor: Intel Core i7</li>
+                        <li>RAM: 8GB DDR4</li>
+                        <li>Storage: 1TB SSD</li>
+                        <li>Display: 14" FHD (1920 x 1080)</li>
+                        <li>Battery: 65Wh</li>
+                        <li>Weight: 1.4kg</li>
+                    </ul>
+                </div>
+                <div class="tab-pane">
+                    <p>No reviews yet.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="promo-banner">
+            <div class="promo-content">
+                <h3>Get 15% Cashback On Brand New Laptop</h3>
+                <p>Limited time offer. Terms and conditions apply.</p>
+                <button class="promo-button">View Offer Details</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="foot" id="contact">
+        <p>Email: company@gmail.com</p>
+        <p>Contact: (123) 456-7890</p>
+        <p>Address: 123 Main St, City, Country</p>
+    </footer>
+    
+    <script>// Product data management
+        const productData = {
+            id: 'sanung-laptop',
+            name: 'Sanung Laptop 14", 8gb ram, 1tb ssd',
+            price: 3210.00,
+            stock: 10,
+        };
+        
+        // Cart management
+        let cart = [];
+        
+        // DOM Elements
+        const quantityInput = document.getElementById('quantity');
+        const decreaseBtn = document.getElementById('decreaseQuantity');
+        const increaseBtn = document.getElementById('increaseQuantity');
+        const addToCartBtn = document.querySelector('.add-to-cart');
+        const buyNowBtn = document.querySelector('.add-to-wishlist');
+        const cartCount = document.querySelector('.cart span');
+        const availabilitySpan = document.querySelector('.availability');
+        const searchInput = document.getElementById('searchInput');
+        const searchIcon = document.getElementById('searchIcon');
+        const searchBar = document.querySelector('.search-bar');
+        
+        // Update availability display
+        function updateAvailabilityDisplay() {
+            console.log('Current stock:', productData.stock); // Debug log
+            if (productData.stock > 0) {
+                availabilitySpan.textContent = `In Stock (${productData.stock} remaining)`;
+                availabilitySpan.classList.remove('out-of-stock');
+                addToCartBtn.classList.remove('disabled');
+                buyNowBtn.classList.remove('disabled');
+                addToCartBtn.disabled = false;
+                buyNowBtn.disabled = false;
+            } else {
+                availabilitySpan.textContent = 'Out of Stock';
+                availabilitySpan.classList.add('out-of-stock');
+                addToCartBtn.classList.add('disabled');
+                buyNowBtn.classList.add('disabled');
+                addToCartBtn.disabled = true;
+                buyNowBtn.disabled = true;
+            }
+        }
+        
+        // Quantity controls
+        decreaseBtn.addEventListener('click', () => {
+            const newValue = Math.max(1, parseInt(quantityInput.value) - 1);
+            quantityInput.value = newValue;
+        });
+        
+        increaseBtn.addEventListener('click', () => {
+            const newValue = Math.min(productData.stock, parseInt(quantityInput.value) + 1);
+            quantityInput.value = newValue;
+        });
+        
+        quantityInput.addEventListener('change', () => {
+            let value = parseInt(quantityInput.value);
+            if (isNaN(value) || value < 1) value = 1;
+            if (value > productData.stock) value = productData.stock;
+            quantityInput.value = value;
+        });
+        
+        // Add to cart functionality (no stock reduction)
+        addToCartBtn.addEventListener('click', () => {
+            const quantity = parseInt(quantityInput.value);
+        
+            if (quantity > productData.stock) {
+                alert(`Sorry, only ${productData.stock} items are available.`);
+                return;
+            }
+        
+            cart.push({
+                productId: productData.id,
+                name: productData.name,
+                price: productData.price,
+                quantity: quantity
+            });
+        
+            cartCount.textContent = cart.length;
+            quantityInput.value = 1;
+            alert('Product added to cart!');
+        });
+        
+        // Buy now functionality (reduces stock)
+        buyNowBtn.addEventListener('click', () => {
+            const quantity = parseInt(quantityInput.value);
+        
+            if (quantity > productData.stock) {
+                alert(`Sorry, only ${productData.stock} items are available.`);
+                return;
+            }
+        
+            productData.stock -= quantity;
+            console.log('Stock after purchase:', productData.stock);
+            updateAvailabilityDisplay();
+            quantityInput.value = 1;
+            alert(`Thank you for your purchase of ${quantity} Samung Laptop(s)!`);
+        });
+        
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        
+        tabButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                button.classList.add('active');
+                tabPanes[index].classList.add('active');
+            });
+        });
+        
+        // Cart icon click handler
+        document.querySelector('.cart').addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty.');
+                return;
+            }
+        
+            let total = 0;
+            const cartItems = cart.map((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                return `${index + 1}. ${item.name} - $${item.price.toFixed(2)} x ${item.quantity} = $${itemTotal.toFixed(2)}`;
+            }).join('\n');
+        
+            alert(`Your Cart:\n\n${cartItems}\n\nTotal: $${total.toFixed(2)}`);
+        });
+        
+        // Search functionality
+        let products = [productData]; // Array of products (expandable if more products are added)
+        
+        // Function to filter products based on search query
+        function filterProducts(query) {
+            query = query.toLowerCase().trim();
+            return products.filter(product => 
+                product.name.toLowerCase().includes(query) || 
+                product.id.toLowerCase().includes(query)
+            );
+        }
+        
+        // Handle search input (trigger on Enter or after typing)
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value;
+                const filteredProducts = filterProducts(query);
+        
+                if (query === '') {
+                    alert('Please enter a search term.');
+                } else if (filteredProducts.length > 0) {
+                    alert(`Found products: ${filteredProducts.map(p => p.name).join(', ')}`);
+                } else {
+                    alert('No products found matching your search.');
+                }
+            }
+        });
+        
+        // Handle search icon click
+        searchIcon.addEventListener('click', () => {
+            const query = searchInput.value;
+            const filteredProducts = filterProducts(query);
+        
+            if (query === '') {
+                alert('Please enter a search term.');
+            } else if (filteredProducts.length > 0) {
+                alert(`Found products: ${filteredProducts.map(p => p.name).join(', ')}`);
+            } else {
+                alert('No products found matching your search.');
+            }
+        });
+        
+        // Handle search bar responsiveness
+        function handleSearchBarResponsiveness() {
+            const width = window.innerWidth;
+        
+            if (width <= 768) {
+                // Mobile layout
+                searchBar.style.width = '100%';
+                searchBar.style.maxWidth = 'none';
+                searchBar.style.padding = '5px 10px';
+                searchInput.style.fontSize = '12px';
+                searchIcon.style.fontSize = '16px';
+            } else {
+                // Desktop layout
+                searchBar.style.width = '300px';
+                searchBar.style.maxWidth = '300px';
+                searchBar.style.padding = '5px 15px';
+                searchInput.style.fontSize = '14px';
+                searchIcon.style.fontSize = '18px';
+            }
+        }
+        
+        // Initialize and listen for resize
+        window.addEventListener('load', () => {
+            handleSearchBarResponsiveness();
+            updateAvailabilityDisplay();
+        });
+        window.addEventListener('resize', handleSearchBarResponsiveness);
+        </script>
+</body>
+</html>

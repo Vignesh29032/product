@@ -486,43 +486,43 @@
         <section class="product-grid">
             <div class="product">
                 
-                <a href=""><img src="earbuds.webp" alt="Gaming Laptop"></a>
-                <h3>Earbuds</h3>
+                <a href="products.html"><img src="imac.webp" alt="Gaming Laptop"></a>
+                <h3>iMac/h3>
                 <p>$540   <i class='bx bx-cart-alt'></i></p>
                
             </div>
             <div class="product">
-                <a href=""><img src="drone.webp" alt="VR Box"></a>
+                <a href="products.html"><img src="drone.webp" alt="VR Box"></a>
                 <h3>Drone</h3>
                 <p>$234   <i class='bx bx-cart-alt'></i> </p>
               
             </div>
             <div class="product">
-                <a href=""><img src="camera.jpg" alt="Gaming VR"></a>
+                <a href="products.html"><img src="camera.jpg" alt="Gaming VR"></a>
                 <h3>Camera</h3>
                 <p>$123   <i class='bx bx-cart-alt'></i> </p>
                 
             </div>
             <div class="product">
-                <a href=""> <img src="keyboard.jpeg" alt="Gaming Headphone"></a>
+                <a href="products.html"> <img src="keyboard.jpeg" alt="Gaming Headphone"></a>
                 <h3>Keyboard</h3>
                 <p>$240   <i class='bx bx-cart-alt'></i></p>
               
             </div>
             <div class="product">
-               <a href=""> <img src="imac.webp" alt="Joy Stick"></a>
-                <h3>imac</h3>
+               <a href="products.html"> <img src="earbuds.webp" alt="Joy Stick"></a>
+                <h3>Earbuds</h3>
                 <p>$125 <i class='bx bx-cart-alt'></i></p>
                 
             </div>
             <div class="product">
-                <img src="earbuds.webp" alt="Gaming Laptop">
+                <a href="products.html"><img src="earbuds.webp" alt="Gaming Laptop"></a>
                 <h3>Earbuds</h3>
                 <p>$540   <i class='bx bx-cart-alt'></i></p>
                
             </div>
             <div class="product">
-                <img src="drone.webp" alt="VR Box">
+                <a href="products.html"><img src="drone.webp" alt="VR Box"></a>
                 <h3>Drone</h3>
                 <p>$234   <i class='bx bx-cart-alt'></i> </p>
               
@@ -558,6 +558,7 @@
               
             </div>
         </section>
+
 <!-- footer  -->
         <footer class="foot" id="contact">
             <p>Email addres :company@gmail.com</p>
@@ -569,6 +570,58 @@
 </div>
 </body>
 <script>
-
+// Wait for DOM to load
+document.addEventListener('DOMContentLoaded', function() {
+    // Get search elements
+    const searchInput = document.querySelector('.search-bar input');
+    const searchButton = document.querySelector('.search-button');
+    const products = document.querySelectorAll('.product');
+    
+    // Function to perform search
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        
+        // If search is empty, show all products
+        if (searchTerm === '') {
+            products.forEach(product => {
+                product.style.display = 'block';
+            });
+            return;
+        }
+        
+        // Filter products based on search term
+        products.forEach(product => {
+            const productName = product.querySelector('h3').textContent.toLowerCase();
+            
+            if (productName.includes(searchTerm)) {
+                product.style.display = 'block';
+            } else {
+                product.style.display = 'none';
+            }
+        });
+        
+        // Scroll to products section
+        document.getElementById('browseproduct').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Add event listeners
+    searchButton.addEventListener('click', performSearch);
+    
+    // Add event listener for Enter key
+    searchInput.addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            performSearch();
+        }
+    });
+    
+    // Clear search when input is cleared
+    searchInput.addEventListener('input', function() {
+        if (this.value === '') {
+            products.forEach(product => {
+                product.style.display = 'block';
+            });
+        }
+    });
+});
 </script>
 </html>
